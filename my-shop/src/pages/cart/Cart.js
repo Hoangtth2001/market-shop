@@ -1,11 +1,13 @@
 import React from 'react'
-import styles from  './Cart.module.scss'
+import styles from './Cart.module.scss'
 
-function Cart() {
+function Card({ children, cardClass }) {
   return (
-    <div>Cart</div>
+    <div className={`${styles.card} ${cardClass}`}>
+      {children}
+    </div>
   )
 }
 
-export default Cart
+export default Card
 
