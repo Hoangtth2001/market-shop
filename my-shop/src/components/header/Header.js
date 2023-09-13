@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import styles from './Header.module.scss'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FaShoppingCart, FaTimes } from 'react-icons/fa'
 
 import { BsMenuButtonWide } from 'react-icons/bs'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../firebase/config'
+import { toast } from 'react-toastify';
 
 const logo = (
     <div className={styles.logo}>
@@ -33,12 +36,22 @@ const activeLink = ({ isActive }) => (
 
 
 function Header() {
+    const navigate = useNavigate()
     const [showMenu, setShowMenu] = useState(false)
     const toggleMenu = () => {
         setShowMenu(!showMenu)
     }
     const hideMenu = () => {
         setShowMenu(false)
+    }
+    const logoutUser = (e) => {
+        e.preventDefault()
+        signOut(auth).then(() => {
+            toast.success('Logout Successful')
+            navigate('/')
+        }).catch((error) => {
+            toast.error(error.message)
+        });
     }
     return (
         <header>
@@ -81,6 +94,9 @@ function Header() {
                             <NavLink to='/register' className={activeLink}> Register
                             </NavLink>
                             <NavLink to='/order-history' className={activeLink}> My Orders
+                            </NavLink>
+
+                            <NavLink to='/' onClick={logoutUser}> Logout
                             </NavLink>
                         </span>
                         {cart}

@@ -3,12 +3,14 @@ import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Contact, Home, Login, Register, Reset } from './pages';
 import { Footer, Header } from './components';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer />
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
